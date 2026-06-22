@@ -1,0 +1,20 @@
+# Raw data files (too large and are government source files — reference only)
+data/raw/*
+*.csv
+*.xlsx
+
+# Keep folder structure visible on GitHub
+!**/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+
+# Mac system files
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
