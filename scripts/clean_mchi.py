@@ -280,9 +280,11 @@ household["htc_hard_to_locate"] = (
 ).astype(int)
 
 # Hard to Contact — location is known but interviewer cannot reach/engage anyone
-# Covers entry barriers (gated buildings) and scheduling/availability issues
+# Covers entry barriers (gated buildings), repeated no-contact visits, and scheduling/availability issues
 household["htc_hard_to_contact"] = (
-    (household["NCTPER07"] > 0) |
+    (household["NCTPER07"] > 0) |   # locked gate or buzzer-entry building
+    (household["NCTPER01"] > 0) |   # no one home on personal visit
+    (household["NCTPER11"] > 0) |   # had to go through building management/doorman
     (household["NONINTR2"] > 0) |
     (household["RSPDNT02"] > 0) |
     (household["RSPDNT05"] > 0) |

@@ -55,6 +55,8 @@ The table below maps each Census HTC framework segment to the MCHI-derived indic
 | **Hard to Persuade** | Government distrust | `NONINTR3` | Respondent was reluctant to participate |
 | **Hard to Persuade** | Government distrust | `FNLOTCME=321` | Final outcome: refused, hostile respondent |
 | **Hard to Contact** | Entry blocked | `NCTPER07` | Unable to reach household — locked gate or buzzer-entry building |
+| **Hard to Contact** | No one home | `NCTPER01` | No one home on personal visit |
+| **Hard to Contact** | Access via management | `NCTPER11` | Interviewer had to go through building management or doorman |
 | **Hard to Contact** | Scheduling / availability | `NONINTR2` | Contact attempt failed due to inconvenient time |
 | **Hard to Contact** | Scheduling / availability | `RSPDNT02` | Respondent said they were too busy |
 | **Hard to Contact** | Scheduling / availability | `RSPDNT05` | Scheduling difficulties noted by interviewer |
@@ -83,7 +85,7 @@ Each household is assigned a binary flag (0 or 1) for each of the four HTC frame
 | Hard to Interview | `NONINTR4`, `LNGUAGE2`, `LNGUAGE4`, `LNGUAGE5`, `LANGLIST`, `FNLOTCME=323` |
 | Hard to Locate | `NCTPER08`, `FNLOTCME=341` |
 | Hard to Persuade | `RSPDNT07`, `RSPDNT08`, `RSPDNT11`, `RSPDNT12`, `NONINTR3`, `FNLOTCME=321` |
-| Hard to Contact | `NCTPER07`, `NONINTR2`, `RSPDNT02`, `RSPDNT05`, `FNLOTCME=216` |
+| Hard to Contact | `NCTPER07`, `NCTPER01`, `NCTPER11`, `NONINTR2`, `RSPDNT02`, `RSPDNT05`, `FNLOTCME=216` |
 
 ### Step 3 — Analysis
 Patterns are analyzed across:
