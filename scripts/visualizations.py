@@ -112,22 +112,22 @@ barrier_groups = df.groupby("htc_segment_count").agg(
     completion_rate=("completed", "mean"),
     count=("completed", "count"),
 ).reset_index()
-barrier_groups = barrier_groups[barrier_groups["barrier_count"] <= 4]
+barrier_groups = barrier_groups[barrier_groups["htc_segment_count"] <= 4]
 barrier_groups["completion_pct"] = barrier_groups["completion_rate"] * 100
 
 fig3 = make_subplots(specs=[[{"secondary_y": True}]])
 
 fig3.add_trace(go.Bar(
-    x=barrier_groups["barrier_count"].astype(str),
+    x=barrier_groups["htc_segment_count"].astype(str),
     y=barrier_groups["completion_pct"],
     name="Completion Rate (%)",
     marker_color=COLORS["completed"],
     opacity=0.85,
-    hovertemplate="Barriers: %{x}<br>Completion: %{y:.1f}%<extra></extra>",
+    hovertemplate="HTC Segments: %{x}<br>Completion: %{y:.1f}%<extra></extra>",
 ), secondary_y=False)
 
 fig3.add_trace(go.Scatter(
-    x=barrier_groups["barrier_count"].astype(str),
+    x=barrier_groups["htc_segment_count"].astype(str),
     y=barrier_groups["avg_attempts"],
     name="Avg Contact Attempts",
     mode="lines+markers",
@@ -155,10 +155,10 @@ print("  Chart 3 saved — Compounding Effect")
 # Completion rate WITH vs WITHOUT each barrier
 # ---------------------------------------------------------------------------
 barrier_names = {
-    "htc_hard_locate": "Hard to Locate",
-    "htc_distrust":    "Govt Distrust",
-    "htc_language":    "Language Barrier",
-    "htc_scheduling":  "Scheduling",
+    "htc_hard_to_locate":    "Hard to Locate",
+    "htc_hard_to_persuade":  "Hard to Persuade",
+    "htc_hard_to_interview": "Hard to Interview",
+    "htc_hard_to_contact":   "Hard to Contact",
 }
 
 with_rates    = []
@@ -190,8 +190,8 @@ fig4.add_trace(go.Bar(
     textposition="outside",
 ))
 fig4.update_layout(
-    title=dict(text="Completion Rate: With vs. Without Each Barrier", font_size=18),
-    xaxis_title="HTC Barrier",
+    title=dict(text="Completion Rate: With vs. Without Each HTC Segment", font_size=18),
+    xaxis_title="HTC Segment",
     yaxis_title="Completion Rate (%)",
     yaxis_range=[0, 65],
     barmode="group",
@@ -207,8 +207,8 @@ print("  Chart 4 saved — Severity by Barrier Type")
 # ---------------------------------------------------------------------------
 # Chart 5 — Co-occurring Barrier Pairs (heatmap)
 # ---------------------------------------------------------------------------
-barrier_cols  = ["htc_language", "htc_distrust", "htc_hard_locate", "htc_scheduling"]
-barrier_short = ["Language", "Distrust", "Hard to Locate", "Scheduling"]
+barrier_cols  = ["htc_hard_to_interview", "htc_hard_to_persuade", "htc_hard_to_locate", "htc_hard_to_contact"]
+barrier_short = ["Hard to Interview", "Hard to Persuade", "Hard to Locate", "Hard to Contact"]
 total = len(df)
 
 matrix = []
@@ -234,7 +234,7 @@ fig5 = go.Figure(go.Heatmap(
     showscale=True,
 ))
 fig5.update_layout(
-    title=dict(text="Barrier Co-occurrence: % of Households With Both Barriers", font_size=18),
+    title=dict(text="HTC Segment Co-occurrence: % of Households With Both Segments", font_size=18),
     height=480,
     plot_bgcolor="white",
 )

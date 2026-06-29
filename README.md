@@ -1,17 +1,17 @@
 # Hard-to-Count Population Dashboard
 
-A dashboard to identify and describe communities that may face barriers to accurate census and survey participation, built using Consumer Expenditure Survey (CE) paradata from the Bureau of Labor Statistics.
+A dashboard to identify and describe communities with characteristics associated with hard-to-count populations, built using Consumer Expenditure Survey (CE) paradata from the Bureau of Labor Statistics.
 
 ---
 
 ## Project Overview
 
-"Hard to Count" (HTC) populations are groups that face barriers in being accurately counted in the census or surveys. The Census Bureau organizes these barriers into four conceptual segments of the HTC framework:
+"Hard to Count" (HTC) populations are groups with characteristics that make accurate counting more difficult in the census or surveys. The Census Bureau organizes these characteristics into four conceptual segments of the HTC framework:
 
 - **Hard to Interview** — language barriers, literacy issues, or other factors that make the interview itself difficult to complete
 - **Hard to Locate** — situations where a household's physical location is difficult to confirm (address issues, household moved, unit uncertainty)
 - **Hard to Persuade** — reluctance driven by distrust of government, privacy concerns, or hostility toward interviewers
-- **Hard to Contact** — situations where the location is known but the interviewer cannot actually reach or engage with anyone there (gated access, repeated no-answers, scheduling barriers)
+- **Hard to Contact** — situations where the location is known but the interviewer cannot actually reach or engage with anyone there (gated access, repeated no-answers, scheduling challenges)
 
 **Important distinction:** These HTC framework segments are *conceptual categories* from the Census literature. The MCHI dataset does not measure them directly — instead, it contains interviewer-recorded indicators that *correspond to* certain segments of the HTC framework. This project maps those MCHI-derived indicators to the appropriate HTC framework segment. The indicators should not be treated as equivalent to the framework categories themselves.
 
