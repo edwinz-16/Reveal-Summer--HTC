@@ -33,12 +33,12 @@ Households were classified into four Census HTC framework segments using MCHI-de
 
 | HTC Segment | MCHI Indicators Used | Households Flagged | % of Total |
 |---|---|---|---|
-| Hard to Contact | NCTPER07, NONINTR2, RSPDNT02, RSPDNT05 | 25,304 | 69.8% |
-| Hard to Persuade | RSPDNT07, RSPDNT08, RSPDNT11, RSPDNT12 | 11,453 | 31.6% |
-| Hard to Locate | NCTPER08 | 8,950 | 24.7% |
+| Hard to Contact | NCTPER07, NONINTR2, RSPDNT02, RSPDNT05 | 28,425 | 78.4% |
+| Hard to Persuade | RSPDNT07, RSPDNT08, RSPDNT11, RSPDNT12 | 15,384 | 42.4% |
 | Hard to Interview | NONINTR4, LNGUAGE2 | 1,365 | 3.8% |
+| Hard to Locate | NCTPER08 | 335 | 0.9% |
 
-**What this means:** Hard to Contact is by far the most widespread segment — nearly 7 in 10 households had at least one MCHI indicator for scheduling or access difficulty. Hard to Interview is the rarest at 3.8%, but as shown in Finding 3, it is among the most severe when it comes to completion.
+**What this means:** Hard to Contact is overwhelmingly the most widespread segment — more than 3 in 4 households had at least one MCHI indicator for scheduling or access difficulty. Hard to Locate is the rarest at 0.9% because it is defined narrowly: only households where the physical address could not be found or the household had moved (NCTPER08). Hard to Persuade, at 42.4%, is the segment with the most severe impact on completion rates.
 
 ---
 
@@ -48,26 +48,26 @@ The core question is not just how common each HTC segment is, but how often they
 
 | HTC Segments Flagged | Households | % of Total |
 |---|---|---|
-| 0 — no HTC indicators | 4,811 | 13.3% |
-| 1 segment | 18,193 | 50.2% |
-| 2 segments | 11,023 | 30.4% |
-| 3 segments | 2,139 | 5.9% |
-| 4 segments (all) | 104 | 0.3% |
+| 0 — no HTC indicators | 4,549 | 12.5% |
+| 1 segment | 18,643 | 51.4% |
+| 2 segments | 12,378 | 34.1% |
+| 3 segments | 690 | 1.9% |
+| 4 segments (all) | 10 | 0.0% |
 
-**What this means:** 86.7% of households show indicators for at least one HTC segment. Nearly one in three is flagged for two segments at the same time. The 6.2% of households flagged for three or four segments represent the most resource-intensive cases for interviewers and are the hardest to reach.
+**What this means:** 87.5% of households show indicators for at least one HTC segment. More than one in three is flagged for two segments at the same time. Households flagged for three or four segments are rare but represent the most resource-intensive cases for interviewers.
 
 ### Most Common Co-occurring HTC Segment Pairs
 
 | HTC Segment Pair | Households | % of Total |
 |---|---|---|
-| Hard to Persuade + Hard to Contact | 8,919 | 24.6% |
-| Hard to Locate + Hard to Contact | 8,056 | 22.2% |
-| Hard to Persuade + Hard to Locate | 4,060 | 11.2% |
-| Hard to Interview + Hard to Contact | 1,004 | 2.8% |
-| Hard to Interview + Hard to Locate | 597 | 1.6% |
-| Hard to Interview + Hard to Persuade | 581 | 1.6% |
+| Hard to Contact + Hard to Persuade | 12,321 | 34.0% |
+| Hard to Contact + Hard to Interview | 1,060 | 2.9% |
+| Hard to Persuade + Hard to Interview | 688 | 1.9% |
+| Hard to Contact + Hard to Locate | 276 | 0.8% |
+| Hard to Persuade + Hard to Locate | 145 | 0.4% |
+| Hard to Locate + Hard to Interview | 18 | 0.0% |
 
-Hard to Persuade and Hard to Contact is the most common combination, present in 1 of every 4 households. This likely reflects a pattern where government-wary respondents use time-related excuses as a repeated deflection — the interviewer logs both scheduling and reluctance indicators across multiple visits.
+Hard to Contact and Hard to Persuade is the most common combination by a large margin, present in 1 in 3 households. This likely reflects a pattern where government-wary respondents use time-related excuses as a repeated deflection — the interviewer logs both scheduling and reluctance indicators across multiple visits.
 
 ---
 
@@ -75,15 +75,15 @@ Hard to Persuade and Hard to Contact is the most common combination, present in 
 
 As the number of HTC segments flagged per household increases, interviewer effort rises and completion rates fall dramatically.
 
-| HTC Segments Flagged | Avg Contact Attempts | Completion Rate |
-|---|---|---|
-| 0 | 7.8 | 49.1% |
-| 1 | 12.9 | 48.6% |
-| 2 | 17.0 | 28.9% |
-| 3 | 20.3 | 20.2% |
-| 4 | 24.0 | 23.1% |
+| HTC Segments Flagged | Households | Avg Contact Attempts | Completion Rate |
+|---|---|---|---|
+| 0 | 4,549 | 8.5 | 47.1% |
+| 1 | 18,643 | 13.7 | 45.9% |
+| 2 | 12,378 | 17.3 | 27.7% |
+| 3 | 690 | 20.8 | 27.1% |
+| 4 | 10 | 21.7 | 20.0% |
 
-**What this means:** One HTC segment alone does not significantly reduce completion — households flagged for one segment complete at nearly the same rate (48.6%) as households with no flags (49.1%). The critical threshold is **two segments**, where completion drops nearly 20 percentage points to 28.9%. This is the most actionable finding for outreach planning: identifying households likely to be flagged for two or more HTC segments before the first contact attempt would allow resources to be allocated more effectively.
+**What this means:** One HTC segment alone does not significantly reduce completion — households flagged for one segment complete at nearly the same rate (45.9%) as households with no flags (47.1%). The critical threshold is **two segments**, where completion drops nearly 18 percentage points to 27.7%. This is the most actionable finding for outreach planning: identifying households likely to be flagged for two or more HTC segments before the first contact attempt would allow resources to be allocated more effectively.
 
 ---
 
@@ -93,17 +93,17 @@ Looking at each HTC segment in isolation, Hard to Locate has the most severe imp
 
 | HTC Segment | Completion With Segment | Completion Without | Avg Attempts With |
 |---|---|---|---|
-| Hard to Locate | 11.8% | 48.5% | 16.4 |
-| Hard to Persuade | 25.6% | 45.8% | 16.0 |
+| Hard to Persuade | 24.4% | 50.6% | 16.1 |
+| Hard to Locate | 26.0% | 39.6% | 17.7 |
 | Hard to Interview | 30.3% | 39.8% | 18.5 |
-| Hard to Contact | 46.2% | 23.8% | 16.1 |
+| Hard to Contact | 41.2% | 33.0% | 15.7 |
 
 **What this means:**
 
-- **Hard to Locate is the most severe single segment** — only 1 in 9 households with address instability indicators ever completes the interview. This covers households where the address couldn't be verified or the household had moved (NCTPER08).
-- **Hard to Persuade** cuts completion nearly in half compared to households without those indicators.
-- **Hard to Interview**, while rare, requires the most contact attempts on average (18.5) — likely because interviewers keep trying while searching for a translator.
-- **Hard to Contact** appears less severe because it is so widespread — it captures many households that eventually complete after rescheduling, alongside those that never do.
+- **Hard to Persuade is the most severe segment** — households with distrust or hostility indicators complete at only 24.4%, compared to 50.6% for households without those flags.
+- **Hard to Locate**, while rare (0.9% of households), still cuts completion significantly — only 26% of households where the address could not be found ever complete.
+- **Hard to Interview** requires the most contact attempts on average (18.5) — likely because interviewers keep trying while searching for a translator.
+- **Hard to Contact** shows a counterintuitive pattern: households with Hard to Contact indicators actually complete at a slightly *higher* rate than those without (41.2% vs 33.0%). This is because Hard to Contact is so widespread (78.4% of households) that the "without" group is a small, unusual subset — not because being Hard to Contact helps completion.
 
 ---
 
@@ -152,19 +152,40 @@ The CE Interview is a rotating panel — households participate in up to 5 waves
 Ranked by relevance to planning and resource allocation:
 
 **1. The two-segment threshold is the critical cutoff.**
-Completion is nearly the same for zero-segment and one-segment households (~49%). At two HTC segments it falls to 29%. Outreach resources should be concentrated on households showing indicators for multiple HTC segments early in the contact process.
+Completion is nearly the same for zero-segment and one-segment households (~47% and ~46%). At two HTC segments it falls to 27.7%. Outreach resources should be concentrated on households showing indicators for multiple HTC segments early in the contact process.
 
-**2. Hard to Locate is the most severe single HTC segment.**
-Only 11.8% of Hard to Locate households ever complete. These households are often physically inaccessible (moved addresses, non-existent addresses per NCTPER08) and may need address verification before any interview is attempted.
+**2. Hard to Persuade is the most severe single HTC segment.**
+Only 24.4% of Hard to Persuade households complete, compared to 50.6% for households without those indicators. Government distrust and hostility represent the most significant individual barrier to completion.
 
-**3. Hard to Persuade + Hard to Contact is the most common multi-segment pattern.**
-Present in 1 in 4 households, this combination likely represents government-wary households using scheduling as a repeated excuse. Standard follow-up strategies (calling, leaving notes) are probably insufficient for this group — trust-building approaches may be more effective.
+**3. Hard to Contact + Hard to Persuade is by far the most common multi-segment pattern.**
+Present in 1 in 3 households (34%), this combination likely represents government-wary respondents using scheduling as a repeated deflection. Standard follow-up strategies may be insufficient — trust-building approaches may be more effective.
 
 **4. Hard to Interview households need the most contact attempts but complete at 30%.**
-A 30% completion rate is low but not as low as Hard to Locate. The high attempt count (18.5 average) suggests interviewers are persistent — the challenge is translator availability, not household willingness. Earlier coordination of translation resources could improve completion for this group.
+The high attempt count (18.5 average) suggests interviewers are persistent — the challenge is translator availability, not household willingness. Earlier coordination of translation resources could improve completion for this group.
 
 **5. Interviewer effort grows significantly across waves.**
 The tripling of contact attempts from Wave 1 to Wave 4 suggests that HTC households are not resolved early — they accumulate and consume increasing resources over the panel period. Early identification of HTC households at Wave 1 would allow more proactive planning before effort escalates.
+
+---
+
+---
+
+## Data Quality Notes
+
+**Undocumented outcome code (313) — 1,625 households**
+Outcome code 313 appears 1,625 times in the raw data but is not listed in the CE-PUMD data dictionary. These households currently fall into the "Other/Unknown" outcome category. The meaning of this code is unclear and should be confirmed with BLS documentation or a data contact before these cases are excluded or interpreted.
+
+**21.5% of households have unclassified final outcomes**
+7,781 households (21.5%) are classified as "Other/Unknown" for final outcome. The bulk of this is driven by code 313 (1,625 cases) alongside a small number of other undocumented codes (225, 226, 233). These households are included in HTC segment counts but their completion status is ambiguous.
+
+**Wave 5 is absent from the dataset**
+The CE panel runs up to 5 interview waves, but no Wave 5 records appear in this data. This is likely expected — the 2023–2024 file was probably cut before Wave 5 households completed their panel — but it means the dataset does not capture the full longitudinal arc of the hardest-to-reach households, who tend to persist into later waves.
+
+**Q1 2023 is disproportionately large**
+Quarter 20231 (Q1 2023) contains 11,302 households — roughly 3.5x the size of every other quarter (~3,100 each). This appears to reflect the panel's enrollment baseline rather than a data error. Aggregate statistics are influenced by this imbalance and should be interpreted with that in mind.
+
+**872 households show 0 days in field**
+These households had a final outcome recorded on day 0. This may represent same-day refusals or a data entry artifact and should be reviewed before using days-in-field as an analysis variable.
 
 ---
 
