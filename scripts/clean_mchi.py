@@ -247,8 +247,13 @@ print(f"  Aggregated shape: {household.shape[0]:,} households x {household.shape
 # that barrier for this household.
 # ---------------------------------------------------------------------------
 
-# Language barrier
-household["htc_language"] = (
+# --- HTC Segment flags ---
+# These correspond to the four Census HTC framework segments.
+# Each flag is 1 if any MCHI indicator for that segment appeared
+# across any contact attempt for this household.
+
+# Hard to Interview — language barriers that prevent the interview itself
+household["htc_hard_to_interview"] = (
     (household["NONINTR4"] > 0) |
     (household["LNGUAGE2"] > 0) |
     (household["LNGUAGE4"] > 0) |
@@ -257,37 +262,39 @@ household["htc_language"] = (
     (household["final_outcome_code"] == "323")
 ).astype(int)
 
-# Government distrust / reluctance
-household["htc_distrust"] = (
+# Hard to Persuade — government distrust, privacy concerns, hostility
+household["htc_hard_to_persuade"] = (
     (household["RSPDNT07"] > 0) |
     (household["RSPDNT08"] > 0) |
     (household["RSPDNT11"] > 0) |
     (household["RSPDNT12"] > 0) |
+    (household["NONINTR3"] > 0) |
     (household["final_outcome_code"] == "321")
 ).astype(int)
 
-# Hard to locate / housing instability
-household["htc_hard_locate"] = (
-    (household["NCTPER07"] > 0) |
+# Hard to Locate — address instability: address can't be found or household moved
+# Distinct from Hard to Contact: here the physical location itself is unknown/uncertain
+household["htc_hard_to_locate"] = (
     (household["NCTPER08"] > 0) |
-    (household["final_outcome_code"].isin(["216", "341"]))
+    (household["final_outcome_code"] == "341")
 ).astype(int)
 
-# Scheduling / time barriers
-household["htc_scheduling"] = (
+# Hard to Contact — location is known but interviewer cannot reach/engage anyone
+# Covers entry barriers (gated buildings) and scheduling/availability issues
+household["htc_hard_to_contact"] = (
+    (household["NCTPER07"] > 0) |
     (household["NONINTR2"] > 0) |
     (household["RSPDNT02"] > 0) |
-    (household["RSPDNT03"] > 0) |
     (household["RSPDNT05"] > 0) |
-    (household["final_outcome_code"] == "322")
+    (household["final_outcome_code"] == "216")
 ).astype(int)
 
-# Total number of barriers per household
-household["barrier_count"] = (
-    household["htc_language"] +
-    household["htc_distrust"] +
-    household["htc_hard_locate"] +
-    household["htc_scheduling"]
+# Total number of HTC segments flagged per household
+household["htc_segment_count"] = (
+    household["htc_hard_to_interview"] +
+    household["htc_hard_to_persuade"] +
+    household["htc_hard_to_locate"] +
+    household["htc_hard_to_contact"]
 )
 
 # Completed interview flag
@@ -299,8 +306,8 @@ household["completed"] = (household["final_outcome_code"] == "201").astype(int)
 ID_COLS     = ["CUID", "qyear", "max_wave"]
 METRIC_COLS = ["contact_attempts", "days_in_field", "completed",
                "final_outcome_code", "final_outcome", "language"]
-HTC_COLS    = ["htc_language", "htc_distrust", "htc_hard_locate",
-               "htc_scheduling", "barrier_count"]
+HTC_COLS    = ["htc_hard_to_interview", "htc_hard_to_persuade",
+               "htc_hard_to_locate", "htc_hard_to_contact", "htc_segment_count"]
 DETAIL_COLS = [c for c in household.columns
                if c not in ID_COLS + METRIC_COLS + HTC_COLS]
 
@@ -322,17 +329,17 @@ print(f"Completed interviews:  {household['completed'].sum():,} ({household['com
 print(f"Avg contact attempts:  {household['contact_attempts'].mean():.1f}")
 print(f"Avg days in field:     {household['days_in_field'].mean():.1f}")
 print()
-print("HTC Barrier Prevalence:")
+print("HTC Segment Indicator Prevalence:")
 for col, label in [
-    ("htc_language",    "Language barrier   "),
-    ("htc_distrust",    "Govt distrust       "),
-    ("htc_hard_locate", "Hard to locate      "),
-    ("htc_scheduling",  "Scheduling          "),
+    ("htc_hard_to_interview", "Hard to Interview"),
+    ("htc_hard_to_persuade",  "Hard to Persuade "),
+    ("htc_hard_to_locate",    "Hard to Locate   "),
+    ("htc_hard_to_contact",   "Hard to Contact  "),
 ]:
     n = household[col].sum()
     print(f"  {label}: {n:,} ({n/len(household)*100:.1f}%)")
 
 print()
-print("Barrier Count Distribution:")
-for n, count in household["barrier_count"].value_counts().sort_index().items():
-    print(f"  {n} barriers: {count:,} ({count/len(household)*100:.1f}%)")
+print("HTC Segment Count Distribution:")
+for n, count in household["htc_segment_count"].value_counts().sort_index().items():
+    print(f"  {n} segments: {count:,} ({count/len(household)*100:.1f}%)")

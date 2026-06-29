@@ -19,9 +19,9 @@ import os
 # ---------------------------------------------------------------------------
 df = pd.read_csv("data/processed/mchi_clean.csv", low_memory=False)
 
-NUMERIC = ["contact_attempts", "days_in_field", "completed", "barrier_count",
-           "htc_language", "htc_distrust", "htc_hard_locate", "htc_scheduling",
-           "max_wave"]
+NUMERIC = ["contact_attempts", "days_in_field", "completed", "htc_segment_count",
+           "htc_hard_to_interview", "htc_hard_to_persuade",
+           "htc_hard_to_locate", "htc_hard_to_contact", "max_wave"]
 for col in NUMERIC:
     df[col] = pd.to_numeric(df[col], errors="coerce")
 
@@ -44,8 +44,8 @@ print("Generating charts...")
 # Chart 1 — Barrier Prevalence
 # How common is each HTC barrier across all households
 # ---------------------------------------------------------------------------
-barriers = ["htc_scheduling", "htc_distrust", "htc_hard_locate", "htc_language"]
-labels   = ["Scheduling /\nTime Constraints", "Government\nDistrust", "Hard to\nLocate", "Language\nBarrier"]
+barriers = ["htc_hard_to_contact", "htc_hard_to_persuade", "htc_hard_to_locate", "htc_hard_to_interview"]
+labels   = ["Hard to\nContact", "Hard to\nPersuade", "Hard to\nLocate", "Hard to\nInterview"]
 colors   = [COLORS["scheduling"], COLORS["distrust"], COLORS["hard_locate"], COLORS["language"]]
 counts   = [df[b].sum() for b in barriers]
 pcts     = [c / len(df) * 100 for c in counts]
@@ -76,7 +76,7 @@ print("  Chart 1 saved — Barrier Prevalence")
 # Chart 2 — Barrier Clustering
 # How many barriers does each household face?
 # ---------------------------------------------------------------------------
-cluster = df["barrier_count"].value_counts().sort_index()
+cluster = df["htc_segment_count"].value_counts().sort_index()
 cluster_labels = ["0 barriers\n(no flags)", "1 barrier", "2 barriers",
                   "3 barriers", "4 barriers"]
 cluster_colors = ["#95a5a6", "#3498db", "#e67e22", "#e74c3c", "#8e44ad"]
@@ -107,7 +107,7 @@ print("  Chart 2 saved — Barrier Clustering")
 # Chart 3 — The Compounding Effect (dual axis)
 # As barriers increase: completion drops, attempts climb
 # ---------------------------------------------------------------------------
-barrier_groups = df.groupby("barrier_count").agg(
+barrier_groups = df.groupby("htc_segment_count").agg(
     avg_attempts=("contact_attempts", "mean"),
     completion_rate=("completed", "mean"),
     count=("completed", "count"),

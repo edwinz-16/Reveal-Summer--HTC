@@ -6,15 +6,16 @@ A dashboard to identify and describe communities that may face barriers to accur
 
 ## Project Overview
 
-"Hard to Count" (HTC) populations are groups that face barriers in being accurately counted in the census or surveys. These barriers include:
+"Hard to Count" (HTC) populations are groups that face barriers in being accurately counted in the census or surveys. The Census Bureau organizes these barriers into four conceptual segments of the HTC framework:
 
-- Language barriers
-- Distrust of government or privacy concerns
-- Housing instability or difficulty being located
-- Scheduling or time-related constraints
-- Survey fatigue
+- **Hard to Interview** — language barriers, literacy issues, or other factors that make the interview itself difficult to complete
+- **Hard to Locate** — situations where a household's physical location is difficult to confirm (address issues, household moved, unit uncertainty)
+- **Hard to Persuade** — reluctance driven by distrust of government, privacy concerns, or hostility toward interviewers
+- **Hard to Contact** — situations where the location is known but the interviewer cannot actually reach or engage with anyone there (gated access, repeated no-answers, scheduling barriers)
 
-This project uses CE paradata — data about *how* the survey was conducted — to identify patterns in contact difficulty that may indicate HTC populations. The goal is a dashboard that helps planners and outreach staff understand where these barriers concentrate and what factors drive them.
+**Important distinction:** These HTC framework segments are *conceptual categories* from the Census literature. The MCHI dataset does not measure them directly — instead, it contains interviewer-recorded indicators that *correspond to* certain segments of the HTC framework. This project maps those MCHI-derived indicators to the appropriate HTC framework segment. The indicators should not be treated as equivalent to the framework categories themselves.
+
+This project uses CE paradata — data about *how* the survey was conducted — to identify patterns in contact difficulty that correspond to HTC populations. The goal is a dashboard that helps planners and outreach staff understand where these characteristics concentrate and what factors drive them.
 
 ---
 
@@ -33,6 +34,34 @@ Bureau of Labor Statistics — [https://www.bls.gov/cex/pumd_doc.htm](https://ww
 
 ---
 
+## HTC Framework to MCHI Crosswalk
+
+The table below maps each Census HTC framework segment to the MCHI-derived indicators used in this analysis, along with the specific variable codes and their descriptions.
+
+| HTC Framework Segment | MCHI Indicator | MCHI Variable | Variable Description |
+|---|---|---|---|
+| **Hard to Interview** | Language barrier | `NONINTR4` | Language was the reason the interview could not be conducted |
+| **Hard to Interview** | Language barrier | `LNGUAGE2` | No household member was able to translate |
+| **Hard to Interview** | Language barrier | `LNGUAGE4` | Interviewer was unable to find a translator |
+| **Hard to Interview** | Language barrier | `LNGUAGE5` | No time left to find a translator |
+| **Hard to Interview** | Language barrier | `LANGLIST` | Language spoken by the household (coded list) |
+| **Hard to Interview** | Language barrier | `FNLOTCME=323` | Final outcome: refused due to language problem |
+| **Hard to Locate** | Address instability | `NCTPER08` | Address does not exist or interviewer was unable to locate it |
+| **Hard to Locate** | Address instability | `FNLOTCME=341` | Final outcome: household moved during survey period |
+| **Hard to Persuade** | Government distrust | `RSPDNT07` | Respondent expressed privacy concerns |
+| **Hard to Persuade** | Government distrust | `RSPDNT08` | Respondent expressed anti-government or local/state/federal concerns |
+| **Hard to Persuade** | Government distrust | `RSPDNT11` | Respondent hung up or slammed door on interviewer |
+| **Hard to Persuade** | Government distrust | `RSPDNT12` | Respondent was hostile or threatened the interviewer |
+| **Hard to Persuade** | Government distrust | `NONINTR3` | Respondent was reluctant to participate |
+| **Hard to Persuade** | Government distrust | `FNLOTCME=321` | Final outcome: refused, hostile respondent |
+| **Hard to Contact** | Entry blocked | `NCTPER07` | Unable to reach household — locked gate or buzzer-entry building |
+| **Hard to Contact** | Scheduling / availability | `NONINTR2` | Contact attempt failed due to inconvenient time |
+| **Hard to Contact** | Scheduling / availability | `RSPDNT02` | Respondent said they were too busy |
+| **Hard to Contact** | Scheduling / availability | `RSPDNT05` | Scheduling difficulties noted by interviewer |
+| **Hard to Contact** | Scheduling / availability | `FNLOTCME=216` | Final outcome: no one home, unable to contact |
+
+---
+
 ## Methodology
 
 ### Step 1 — Data Aggregation
@@ -42,26 +71,26 @@ For each household we compute:
 - Total number of contact attempts
 - Days in the field (`DYSINFLD` max)
 - Final interview outcome (`FNLOTCME`)
-- Whether any language barrier was flagged (`NONINTR4`, `LANGLIST`, `LNGUAGE2–5`)
-- Count of respondent concern flags (`RSPDNT*`)
-- Count of non-interview reason flags (`NONINTR*`)
+- Whether any indicator for each HTC segment was flagged across any contact attempt
+- Count of each respondent characteristic flag (`RSPDNT*`)
+- Count of each non-interview reason flag (`NONINTR*`)
 
 ### Step 2 — HTC Indicator Construction
-Each household is assigned binary flags for four HTC barrier categories:
+Each household is assigned a binary flag (0 or 1) for each of the four HTC framework segments based on whether any corresponding MCHI indicator was recorded across all contact attempts:
 
-| HTC Barrier | Key Variables |
+| HTC Segment | MCHI Indicators Used |
 |---|---|
-| Language barrier | `NONINTR4`, `LANGLIST`, `LNGUAGE2`, `FNLOTCME=323` |
-| Government distrust / reluctance | `RSPDNT07`, `RSPDNT08`, `RSPDNT12`, `FNLOTCME=321` |
-| Hard to locate / housing instability | `FNLOTCME=216/341`, `NCTPER07`, `NCTPER08`, high attempt count |
-| Time / scheduling barriers | `NONINTR2`, `RSPDNT02`, `RSPDNT03`, `FNLOTCME=322` |
+| Hard to Interview | `NONINTR4`, `LNGUAGE2`, `LNGUAGE4`, `LNGUAGE5`, `LANGLIST`, `FNLOTCME=323` |
+| Hard to Locate | `NCTPER08`, `FNLOTCME=341` |
+| Hard to Persuade | `RSPDNT07`, `RSPDNT08`, `RSPDNT11`, `RSPDNT12`, `NONINTR3`, `FNLOTCME=321` |
+| Hard to Contact | `NCTPER07`, `NONINTR2`, `RSPDNT02`, `RSPDNT05`, `FNLOTCME=216` |
 
 ### Step 3 — Analysis
 Patterns are analyzed across:
-- Interview wave (`INTERI`) — does difficulty increase in later waves?
+- Interview wave (`INTERI`) — does contact difficulty increase in later waves?
 - Quarter (`QYEAR`) — seasonal patterns in contact success
-- Language group (`LANGLIST`) — which language communities face the most barriers
-- HTC barrier combinations — which barriers co-occur most often
+- Language group (`LANGLIST`) — which language communities have the most Hard to Interview indicators
+- HTC indicator combinations — which segment indicators co-occur most often
 
 ### Step 4 — Dashboard
 An interactive dashboard built in Python (Streamlit) displays the HTC indicators and allows users to filter and explore the data.
@@ -73,12 +102,14 @@ An interactive dashboard built in Python (Streamlit) displays the HTC indicators
 ```
 .
 ├── data/
-│   ├── raw/          # Source CSV files (not tracked in git)
-│   └── processed/    # Cleaned, aggregated outputs
+│   ├── raw/            # Source CSV files (not tracked in git)
+│   └── processed/      # Cleaned, aggregated outputs
 ├── scripts/
-│   └── aggregate_mchi.py   # Aggregates MCHI to household level
+│   ├── clean_mchi.py         # Aggregates MCHI to household level, creates HTC indicators
+│   └── visualizations.py     # Generates interactive charts from cleaned data
 ├── dashboard/
-│   └── app.py              # Streamlit dashboard
+│   └── app.py                # Streamlit dashboard (in progress)
+├── findings_report.md        # Detailed findings from MCHI analysis
 ├── README.md
 └── .gitignore
 ```
@@ -92,9 +123,14 @@ An interactive dashboard built in Python (Streamlit) displays the HTC indicators
 pip install pandas streamlit plotly
 ```
 
-### Aggregate the data
+### Clean and aggregate the data
 ```bash
-python scripts/aggregate_mchi.py
+python scripts/clean_mchi.py
+```
+
+### Generate visualizations
+```bash
+python scripts/visualizations.py
 ```
 
 ### Launch the dashboard
@@ -107,46 +143,46 @@ streamlit run dashboard/app.py
 ## Research Focus
 
 ### Primary Research Question
-*What patterns of contact difficulty in the CE Interview survey reflect barriers commonly associated with hard-to-count populations, and do these barriers tend to cluster together within the same households?*
+*What patterns of contact difficulty in the CE Interview survey correspond to characteristics associated with hard-to-count populations, and do these characteristics tend to cluster together within the same households?*
 
 ### Sub-questions
-1. Which HTC barriers — language, government distrust, housing instability, and scheduling difficulty — are most prevalent among households that did not complete the survey?
-2. Do certain barriers co-occur within the same household, suggesting some populations face compounding disadvantages?
-3. Which barriers are associated with the highest interviewer effort (contact attempts, days in field), and what outreach strategies were used in response?
+1. Which HTC framework segments — Hard to Interview, Hard to Locate, Hard to Persuade, Hard to Contact — are most prevalent among households that did not complete the survey?
+2. Do indicators from multiple HTC segments appear in the same household, suggesting some populations face compounding disadvantages?
+3. Which HTC segment indicators are associated with the highest interviewer effort (contact attempts, days in field), and what outreach strategies were used in response?
 
 ---
 
 ## Key Findings
 
-### Barrier Prevalence
-Analysis of the 36,270 households in the MCHI 2023–2024 data shows that scheduling and time-related barriers are by far the most widespread HTC signal, while language barriers are the rarest but likely the most severe.
+### HTC Indicator Prevalence
+Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Contact indicators are by far the most widespread, while Hard to Interview indicators are the rarest but likely the most severe to resolve.
 
-| HTC Barrier | Households Flagged | % of Total |
+| HTC Framework Segment | Households Flagged | % of Total |
 |---|---|---|
-| Scheduling / time constraints | 25,233 | 69.6% |
-| Hard to locate / housing instability | 12,851 | 35.4% |
-| Government distrust / reluctance | 11,821 | 32.6% |
-| Language barrier | 1,449 | 4.0% |
+| Hard to Contact | 25,304 | 69.8% |
+| Hard to Persuade | 11,453 | 31.6% |
+| Hard to Locate | 8,950 | 24.7% |
+| Hard to Interview | 1,365 | 3.8% |
 
-### Barrier Clustering
-A key focus of this analysis is understanding how barriers **cluster** — meaning whether the same households tend to face multiple barriers simultaneously rather than just one. This matters because compounding barriers likely make households significantly harder to reach than any single barrier alone.
+### Indicator Clustering
+A key focus of this analysis is understanding how HTC indicators **cluster** — whether the same households tend to show characteristics from multiple HTC segments simultaneously. This matters because households flagged across multiple segments require significantly more interviewer effort and are far less likely to complete.
 
 Among the 36,270 households:
 
-| Number of Barriers | Households | % of Total |
+| Number of HTC Segments Flagged | Households | % of Total |
 |---|---|---|
-| 0 (no HTC flags) | 4,168 | 11.5% |
-| 1 barrier | 16,626 | 45.8% |
-| 2 barriers | 11,889 | 32.8% |
-| 3 barriers | 3,398 | 9.4% |
-| 4 barriers (all) | 189 | 0.5% |
+| 0 (no indicators) | 4,811 | 13.3% |
+| 1 segment | 18,193 | 50.2% |
+| 2 segments | 11,023 | 30.4% |
+| 3 segments | 2,139 | 5.9% |
+| 4 segments | 104 | 0.3% |
 
-**88.5% of households carry at least one HTC barrier.** Nearly half face two or more simultaneously.
+**86.7% of households have at least one HTC indicator.** Nearly one in three shows indicators from two or more segments simultaneously.
 
 ### The Compounding Effect
-The most compelling pattern is how barriers compound. As the number of barriers per household increases, interviewer effort goes up sharply and completion rates drop:
+As the number of HTC segments flagged per household increases, interviewer effort rises and completion rates fall:
 
-| Barriers | Avg Contact Attempts | Completion Rate |
+| Segments Flagged | Avg Contact Attempts | Completion Rate |
 |---|---|---|
 | 0 | 7.8 | 49.1% |
 | 1 | 12.9 | 48.6% |
@@ -154,21 +190,18 @@ The most compelling pattern is how barriers compound. As the number of barriers 
 | 3 | 20.3 | 20.2% |
 | 4 | 24.0 | 23.1% |
 
-The jump from 1 to 2 barriers is particularly striking — completion falls nearly 20 percentage points and contact attempts increase by a third. This suggests that multiple barriers are not simply additive; they interact in ways that make households significantly harder to reach.
+The jump from 1 to 2 segments is the critical threshold — completion drops nearly 20 percentage points. Households showing indicators from multiple HTC segments are not simply harder to reach additively; they interact in ways that compound the difficulty.
 
-### Most Common Barrier Combinations
-Among households with 2 or more barriers, the most frequent co-occurring pairs are:
+### Most Common Co-occurring Segment Pairs
 
-| Barrier Pair | Households | % of Total |
+| Segment Pair | Households | % of Total |
 |---|---|---|
-| Distrust + Scheduling | 8,919 | 24.6% |
-| Hard to locate + Scheduling | 8,056 | 22.2% |
-| Distrust + Hard to locate | 4,060 | 11.2% |
-| Language + Scheduling | 1,004 | 2.8% |
-| Language + Hard to locate | 597 | 1.6% |
-| Language + Distrust | 581 | 1.6% |
-
-Distrust and scheduling is the most common pairing, appearing in 1 in 4 households. This likely reflects a pattern where government-wary respondents use scheduling excuses as a repeated deflection strategy.
+| Hard to Persuade + Hard to Contact | 8,919 | 24.6% |
+| Hard to Locate + Hard to Contact | 8,056 | 22.2% |
+| Hard to Persuade + Hard to Locate | 4,060 | 11.2% |
+| Hard to Interview + Hard to Contact | 1,004 | 2.8% |
+| Hard to Interview + Hard to Locate | 597 | 1.6% |
+| Hard to Interview + Hard to Persuade | 581 | 1.6% |
 
 > *Further findings will be added as analysis continues, including patterns by interview wave, season, and language group.*
 
