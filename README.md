@@ -8,10 +8,10 @@ A dashboard to identify and describe communities with characteristics associated
 
 "Hard to Count" (HTC) populations are groups with characteristics that make accurate counting more difficult in the census or surveys. The Census Bureau organizes these characteristics into four conceptual segments of the HTC framework:
 
-- **Hard to Interview** — language barriers, literacy issues, or other factors that make the interview itself difficult to complete
+- **Hard to Interview** — situations where language or communication factors make it difficult to conduct the interview itself
 - **Hard to Locate** — situations where a household's physical location is difficult to confirm (address issues, household moved, unit uncertainty)
-- **Hard to Persuade** — reluctance driven by distrust of government, privacy concerns, or hostility toward interviewers
-- **Hard to Contact** — situations where the location is known but the interviewer cannot actually reach or engage with anyone there (gated access, repeated no-answers, scheduling challenges)
+- **Hard to Persuade** — situations where households express concerns about data privacy, government data collection, or survey participation
+- **Hard to Contact** — situations where the household's location is known but the interviewer was unable to reach or connect with anyone there (gated access, repeated no-contact visits, scheduling constraints)
 
 **Important distinction:** These HTC framework segments are *conceptual categories* from the Census literature. The MCHI dataset does not measure them directly — instead, it contains interviewer-recorded indicators that *correspond to* certain segments of the HTC framework. This project maps those MCHI-derived indicators to the appropriate HTC framework segment. The indicators should not be treated as equivalent to the framework categories themselves.
 
@@ -48,12 +48,12 @@ The table below maps each Census HTC framework segment to the MCHI-derived indic
 | **Hard to Interview** | Language barrier | `FNLOTCME=323` | Final outcome: refused due to language problem |
 | **Hard to Locate** | Address instability | `NCTPER08` | Address does not exist or interviewer was unable to locate it |
 | **Hard to Locate** | Address instability | `FNLOTCME=341` | Final outcome: household moved during survey period |
-| **Hard to Persuade** | Government distrust | `RSPDNT07` | Respondent expressed privacy concerns |
-| **Hard to Persuade** | Government distrust | `RSPDNT08` | Respondent expressed anti-government or local/state/federal concerns |
-| **Hard to Persuade** | Government distrust | `RSPDNT11` | Respondent hung up or slammed door on interviewer |
-| **Hard to Persuade** | Government distrust | `RSPDNT12` | Respondent was hostile or threatened the interviewer |
-| **Hard to Persuade** | Government distrust | `NONINTR3` | Respondent was reluctant to participate |
-| **Hard to Persuade** | Government distrust | `FNLOTCME=321` | Final outcome: refused, hostile respondent |
+| **Hard to Persuade** | Privacy / participation concerns | `RSPDNT07` | Interviewer recorded: respondent cited privacy concerns |
+| **Hard to Persuade** | Privacy / participation concerns | `RSPDNT08` | Interviewer recorded: respondent cited concerns about government data collection |
+| **Hard to Persuade** | Privacy / participation concerns | `RSPDNT11` | Interviewer recorded: contact was ended abruptly by respondent |
+| **Hard to Persuade** | Privacy / participation concerns | `RSPDNT12` | Interviewer recorded: respondent expressed strong objection to continued contact |
+| **Hard to Persuade** | Privacy / participation concerns | `NONINTR3` | Interviewer recorded: respondent indicated hesitation to participate |
+| **Hard to Persuade** | Privacy / participation concerns | `FNLOTCME=321` | Final outcome: interview not completed due to respondent non-participation |
 | **Hard to Contact** | Entry blocked | `NCTPER07` | Unable to reach household — locked gate or buzzer-entry building |
 | **Hard to Contact** | No one home | `NCTPER01` | No one home on personal visit |
 | **Hard to Contact** | Access via management | `NCTPER11` | Interviewer had to go through building management or doorman |
@@ -149,7 +149,7 @@ streamlit run dashboard/app.py
 
 ### Sub-questions
 1. Which HTC framework segments — Hard to Interview, Hard to Locate, Hard to Persuade, Hard to Contact — are most prevalent among households that did not complete the survey?
-2. Do indicators from multiple HTC segments appear in the same household, suggesting some populations face compounding disadvantages?
+2. Do indicators from multiple HTC segments appear in the same household, and how does the presence of multiple segment indicators relate to interview completion rates?
 3. Which HTC segment indicators are associated with the highest interviewer effort (contact attempts, days in field), and what outreach strategies were used in response?
 
 ---
@@ -157,53 +157,53 @@ streamlit run dashboard/app.py
 ## Key Findings
 
 ### HTC Indicator Prevalence
-Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Contact indicators are by far the most widespread, while Hard to Interview indicators are the rarest but likely the most severe to resolve.
+Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Contact indicators are the most widespread, present in over 9 in 10 households. Hard to Locate indicators are the rarest, reflecting the narrow definition of address instability.
 
 | HTC Framework Segment | Households Flagged | % of Total |
 |---|---|---|
-| Hard to Contact | 25,304 | 69.8% |
-| Hard to Persuade | 11,453 | 31.6% |
-| Hard to Locate | 8,950 | 24.7% |
+| Hard to Contact | 33,362 | 92.0% |
+| Hard to Persuade | 15,384 | 42.4% |
 | Hard to Interview | 1,365 | 3.8% |
+| Hard to Locate | 335 | 0.9% |
 
 ### Indicator Clustering
-A key focus of this analysis is understanding how HTC indicators **cluster** — whether the same households tend to show characteristics from multiple HTC segments simultaneously. This matters because households flagged across multiple segments require significantly more interviewer effort and are far less likely to complete.
+A key focus of this analysis is understanding how HTC indicators **cluster** — whether the same households tend to show indicators from multiple HTC segments simultaneously. This matters because households flagged across multiple segments are associated with significantly more interviewer effort and lower completion rates.
 
 Among the 36,270 households:
 
 | Number of HTC Segments Flagged | Households | % of Total |
 |---|---|---|
-| 0 (no indicators) | 4,811 | 13.3% |
-| 1 segment | 18,193 | 50.2% |
-| 2 segments | 11,023 | 30.4% |
-| 3 segments | 2,139 | 5.9% |
-| 4 segments | 104 | 0.3% |
+| 0 (no indicators) | 1,822 | 5.0% |
+| 1 segment | 19,260 | 53.1% |
+| 2 segments | 14,388 | 39.7% |
+| 3 segments | 790 | 2.2% |
+| 4 segments | 10 | 0.0% |
 
-**86.7% of households have at least one HTC indicator.** Nearly one in three shows indicators from two or more segments simultaneously.
+**95% of households have at least one HTC indicator.** Nearly 2 in 5 show indicators from two or more segments simultaneously.
 
 ### The Compounding Effect
 As the number of HTC segments flagged per household increases, interviewer effort rises and completion rates fall:
 
-| Segments Flagged | Avg Contact Attempts | Completion Rate |
-|---|---|---|
-| 0 | 7.8 | 49.1% |
-| 1 | 12.9 | 48.6% |
-| 2 | 17.0 | 28.9% |
-| 3 | 20.3 | 20.2% |
-| 4 | 24.0 | 23.1% |
+| Segments Flagged | Households | Avg Contact Attempts | Completion Rate |
+|---|---|---|---|
+| 0 | 1,822 | 4.4 | 64.5% |
+| 1 | 19,260 | 13.4 | 48.3% |
+| 2 | 14,388 | 16.7 | 25.3% |
+| 3 | 790 | 20.2 | 25.8% |
+| 4 | 10 | 21.7 | 20.0% |
 
-The jump from 1 to 2 segments is the critical threshold — completion drops nearly 20 percentage points. Households showing indicators from multiple HTC segments are not simply harder to reach additively; they interact in ways that compound the difficulty.
+The jump from 1 to 2 segments is the critical threshold — completion falls nearly 23 percentage points. Households with indicators from multiple HTC segments show substantially lower completion rates that do not appear to be simply additive.
 
 ### Most Common Co-occurring Segment Pairs
 
 | Segment Pair | Households | % of Total |
 |---|---|---|
-| Hard to Persuade + Hard to Contact | 8,919 | 24.6% |
-| Hard to Locate + Hard to Contact | 8,056 | 22.2% |
-| Hard to Persuade + Hard to Locate | 4,060 | 11.2% |
-| Hard to Interview + Hard to Contact | 1,004 | 2.8% |
-| Hard to Interview + Hard to Locate | 597 | 1.6% |
-| Hard to Interview + Hard to Persuade | 581 | 1.6% |
+| Hard to Contact + Hard to Persuade | 14,376 | 39.6% |
+| Hard to Contact + Hard to Interview | 1,275 | 3.5% |
+| Hard to Persuade + Hard to Interview | 688 | 1.9% |
+| Hard to Contact + Hard to Locate | 316 | 0.9% |
+| Hard to Persuade + Hard to Locate | 145 | 0.4% |
+| Hard to Locate + Hard to Interview | 18 | 0.0% |
 
 > *Further findings will be added as analysis continues, including patterns by interview wave, season, and language group.*
 
