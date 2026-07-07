@@ -262,14 +262,20 @@ household["htc_hard_to_interview"] = (
     (household["final_outcome_code"] == "323")
 ).astype(int)
 
-# Hard to Persuade — government distrust, privacy concerns, hostility
+# Hard to Persuade — contact was made but respondent declined to participate
+# Includes privacy/distrust concerns AND scheduling/availability declines
+# (scheduling codes go here because the respondent communicated a reason — contact was established)
 household["htc_hard_to_persuade"] = (
     (household["RSPDNT07"] > 0) |
     (household["RSPDNT08"] > 0) |
     (household["RSPDNT11"] > 0) |
     (household["RSPDNT12"] > 0) |
     (household["NONINTR3"] > 0) |
-    (household["final_outcome_code"] == "321")
+    (household["NONINTR2"] > 0) |   # inconvenient time — respondent communicated this
+    (household["RSPDNT02"] > 0) |   # respondent said too busy
+    (household["RSPDNT05"] > 0) |   # scheduling difficulties
+    (household["final_outcome_code"] == "321") |
+    (household["final_outcome_code"] == "322")  # refused, time-related excuses
 ).astype(int)
 
 # Hard to Locate — address instability: address can't be found or household moved
@@ -286,10 +292,7 @@ household["htc_hard_to_contact"] = (
     (household["NCTPER01"] > 0) |   # no one home on personal visit
     (household["NCTPER04"] > 0) |   # someone home but not answering door
     (household["NCTPER11"] > 0) |   # had to go through building management/doorman
-    (household["NONINTR2"] > 0) |
-    (household["RSPDNT02"] > 0) |
-    (household["RSPDNT05"] > 0) |
-    (household["final_outcome_code"] == "216")
+    (household["final_outcome_code"] == "216")  # final outcome: no one home, unable to contact
 ).astype(int)
 
 # Total number of HTC segments flagged per household

@@ -53,15 +53,16 @@ The table below maps each Census HTC framework segment to the MCHI-derived indic
 | **Hard to Persuade** | Privacy / participation concerns | `RSPDNT11` | Interviewer recorded: contact was ended abruptly by respondent |
 | **Hard to Persuade** | Privacy / participation concerns | `RSPDNT12` | Interviewer recorded: respondent expressed strong objection to continued contact |
 | **Hard to Persuade** | Privacy / participation concerns | `NONINTR3` | Interviewer recorded: respondent indicated hesitation to participate |
-| **Hard to Persuade** | Privacy / participation concerns | `FNLOTCME=321` | Final outcome: interview not completed due to respondent non-participation |
+| **Hard to Persuade** | Scheduling / availability decline | `NONINTR2` | Respondent indicated the time was inconvenient (contact was established) |
+| **Hard to Persuade** | Scheduling / availability decline | `RSPDNT02` | Respondent said they were too busy (contact was established) |
+| **Hard to Persuade** | Scheduling / availability decline | `RSPDNT05` | Respondent cited scheduling difficulties (contact was established) |
+| **Hard to Persuade** | Scheduling / availability decline | `FNLOTCME=321` | Final outcome: interview not completed due to respondent non-participation |
+| **Hard to Persuade** | Scheduling / availability decline | `FNLOTCME=322` | Final outcome: interview not completed, respondent cited time-related reasons |
 | **Hard to Contact** | Entry blocked | `NCTPER07` | Unable to reach household — locked gate or buzzer-entry building |
 | **Hard to Contact** | No one home | `NCTPER01` | No one home on personal visit |
 | **Hard to Contact** | No answer at door | `NCTPER04` | Someone appeared to be home but did not answer the door |
 | **Hard to Contact** | Access via management | `NCTPER11` | Interviewer had to go through building management or doorman |
-| **Hard to Contact** | Scheduling / availability | `NONINTR2` | Contact attempt failed due to inconvenient time |
-| **Hard to Contact** | Scheduling / availability | `RSPDNT02` | Respondent said they were too busy |
-| **Hard to Contact** | Scheduling / availability | `RSPDNT05` | Scheduling difficulties noted by interviewer |
-| **Hard to Contact** | Scheduling / availability | `FNLOTCME=216` | Final outcome: no one home, unable to contact |
+| **Hard to Contact** | No contact made | `FNLOTCME=216` | Final outcome: no one home, unable to make any contact |
 
 ---
 
@@ -85,8 +86,8 @@ Each household is assigned a binary flag (0 or 1) for each of the four HTC frame
 |---|---|
 | Hard to Interview | `NONINTR4`, `LNGUAGE2`, `LNGUAGE4`, `LNGUAGE5`, `LANGLIST`, `FNLOTCME=323` |
 | Hard to Locate | `NCTPER08`, `FNLOTCME=341` |
-| Hard to Persuade | `RSPDNT07`, `RSPDNT08`, `RSPDNT11`, `RSPDNT12`, `NONINTR3`, `FNLOTCME=321` |
-| Hard to Contact | `NCTPER07`, `NCTPER01`, `NCTPER04`, `NCTPER11`, `NONINTR2`, `RSPDNT02`, `RSPDNT05`, `FNLOTCME=216` |
+| Hard to Persuade | `RSPDNT07`, `RSPDNT08`, `RSPDNT11`, `RSPDNT12`, `NONINTR3`, `NONINTR2`, `RSPDNT02`, `RSPDNT05`, `FNLOTCME=321`, `FNLOTCME=322` |
+| Hard to Contact | `NCTPER07`, `NCTPER01`, `NCTPER04`, `NCTPER11`, `FNLOTCME=216` |
 
 ### Step 3 — Analysis
 Patterns are analyzed across:
