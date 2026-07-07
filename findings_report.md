@@ -175,8 +175,8 @@ The tripling of contact attempts from Wave 1 to Wave 4 suggests that HTC househo
 **Undocumented outcome code (313) — 1,625 households**
 Outcome code 313 appears 1,625 times in the raw data but is not listed in the CE-PUMD data dictionary. These households currently fall into the "Other/Unknown" outcome category. The meaning of this code is unclear and should be confirmed with BLS documentation or a data contact before these cases are excluded or interpreted.
 
-**21.5% of households have unclassified final outcomes**
-7,781 households (21.5%) are classified as "Other/Unknown" for final outcome. The bulk of this is driven by code 313 (1,625 cases) alongside a small number of other undocumented codes (225, 226, 233). These households are included in HTC segment counts but their completion status is ambiguous.
+**4.5% of households have unclassified final outcomes**
+1,636 households (4.5%) are classified as "Other/Unknown" for final outcome. Of these, 1,625 are due to the undocumented outcome code 313. The remaining 11 are split across codes 225, 226, 332, and 233 — each appearing in only 2–3 households and likely representing data entry artifacts. These households are included in HTC segment counts but their completion status is ambiguous.
 
 **Wave 5 is absent from the dataset**
 The CE panel runs up to 5 interview waves, but no Wave 5 records appear in this data. This is likely expected — the 2023–2024 file was probably cut before Wave 5 households completed their panel — but it means the dataset does not capture the full longitudinal arc of the hardest-to-reach households, who tend to persist into later waves.

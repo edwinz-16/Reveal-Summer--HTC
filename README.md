@@ -238,8 +238,8 @@ The 2023–2024 MCHI file contains no Wave 5 records. The CE panel runs up to 5 
 **Undocumented outcome code 313 — 1,625 households**
 Outcome code 313 appears 38,362 times in the raw data across 3,063 households but is not listed in the CE-PUMD data dictionary. These households are currently classified as "Other/Unknown" for final outcome. Based on the pattern of predominantly non-contact attempts, the code may represent a non-eligibility category, but this has not been confirmed. Final interpretation of these cases should await clarification from BLS or an updated data dictionary.
 
-**21.5% of households have unclassified final outcomes**
-7,781 households (21.5%) fall into the "Other/Unknown" final outcome category due to outcome codes not present in the data dictionary (primarily code 313). These households are included in HTC segment counts but their interview completion status is uncertain.
+**4.5% of households have unclassified final outcomes**
+1,636 households (4.5%) fall into the "Other/Unknown" final outcome category. Of these, 1,625 are due to the undocumented outcome code 313. The remaining 11 are split across codes 225, 226, 332, and 233 — each appearing in only 2–3 households and likely representing data entry artifacts. These households are included in HTC segment counts but their interview completion status is uncertain.
 
 **Q1 2023 is disproportionately large**
 Quarter 20231 (Q1 2023) contains 11,302 households — approximately 3.5 times the size of every other quarter (~3,100 each). This appears to reflect the panel's enrollment baseline rather than a data error, but it means aggregate statistics are influenced by Q1 2023 households more heavily than any other period.
