@@ -159,12 +159,12 @@ streamlit run dashboard/app.py
 ## Key Findings
 
 ### HTC Indicator Prevalence
-Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Contact indicators are the most widespread, present in over 9 in 10 households. Hard to Locate indicators are the rarest, reflecting the narrow definition of address instability.
+Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Persuade and Hard to Contact are nearly equally prevalent, each present in roughly 3 in 4 households. Hard to Locate is the rarest, reflecting its narrow definition of address instability.
 
 | HTC Framework Segment | Households Flagged | % of Total |
 |---|---|---|
-| Hard to Contact | 33,362 | 92.0% |
-| Hard to Persuade | 15,384 | 42.4% |
+| Hard to Persuade | 28,720 | 79.2% |
+| Hard to Contact | 28,092 | 77.5% |
 | Hard to Interview | 1,365 | 3.8% |
 | Hard to Locate | 335 | 0.9% |
 
@@ -175,36 +175,36 @@ Among the 36,270 households:
 
 | Number of HTC Segments Flagged | Households | % of Total |
 |---|---|---|
-| 0 (no indicators) | 1,822 | 5.0% |
-| 1 segment | 19,260 | 53.1% |
-| 2 segments | 14,388 | 39.7% |
-| 3 segments | 790 | 2.2% |
-| 4 segments | 10 | 0.0% |
+| 0 (no indicators) | 1,628 | 4.5% |
+| 1 segment | 11,935 | 32.9% |
+| 2 segments | 21,558 | 59.4% |
+| 3 segments | 1,135 | 3.1% |
+| 4 segments | 14 | 0.0% |
 
-**95% of households have at least one HTC indicator.** Nearly 2 in 5 show indicators from two or more segments simultaneously.
+**95.5% of households have at least one HTC indicator.** Nearly 3 in 5 show indicators from two or more segments simultaneously — meaning multi-segment households are the norm, not the exception.
 
 ### The Compounding Effect
 As the number of HTC segments flagged per household increases, interviewer effort rises and completion rates fall:
 
 | Segments Flagged | Households | Avg Contact Attempts | Completion Rate |
 |---|---|---|---|
-| 0 | 1,822 | 4.4 | 64.5% |
-| 1 | 19,260 | 13.4 | 48.3% |
-| 2 | 14,388 | 16.7 | 25.3% |
-| 3 | 790 | 20.2 | 25.8% |
-| 4 | 10 | 21.7 | 20.0% |
+| 0 | 1,628 | 4.2 | 70.2% |
+| 1 | 11,935 | 10.3 | 44.1% |
+| 2 | 21,558 | 17.1 | 35.0% |
+| 3 | 1,135 | 20.6 | 30.8% |
+| 4 | 14 | 23.0 | 21.4% |
 
-The jump from 1 to 2 segments is the critical threshold — completion falls nearly 23 percentage points. Households with indicators from multiple HTC segments show substantially lower completion rates that do not appear to be simply additive.
+Each additional segment is associated with more contact attempts and lower completion. The steepest drop occurs from 0 to 1 segment, where completion falls from 70.2% to 44.1% — reflecting that even a single HTC indicator significantly affects interview outcomes.
 
 ### Most Common Co-occurring Segment Pairs
 
 | Segment Pair | Households | % of Total |
 |---|---|---|
-| Hard to Contact + Hard to Persuade | 14,376 | 39.6% |
-| Hard to Contact + Hard to Interview | 1,275 | 3.5% |
-| Hard to Persuade + Hard to Interview | 688 | 1.9% |
-| Hard to Contact + Hard to Locate | 316 | 0.9% |
-| Hard to Persuade + Hard to Locate | 145 | 0.4% |
+| Hard to Contact + Hard to Persuade | 22,244 | 61.3% |
+| Hard to Contact + Hard to Interview | 1,144 | 3.2% |
+| Hard to Persuade + Hard to Interview | 1,104 | 3.0% |
+| Hard to Contact + Hard to Locate | 289 | 0.8% |
+| Hard to Persuade + Hard to Locate | 248 | 0.7% |
 | Hard to Locate + Hard to Interview | 18 | 0.0% |
 
 > *Further findings will be added as analysis continues, including patterns by interview wave, season, and language group.*
