@@ -120,30 +120,6 @@ An interactive dashboard built in Python (Streamlit) displays the HTC indicators
 
 ---
 
-## How to Run
-
-### Install dependencies
-```bash
-pip install pandas streamlit plotly
-```
-
-### Clean and aggregate the data
-```bash
-python scripts/clean_mchi.py
-```
-
-### Generate visualizations
-```bash
-python scripts/visualizations.py
-```
-
-### Launch the dashboard
-```bash
-streamlit run dashboard/app.py
-```
-
----
-
 ## Research Focus
 
 ### Primary Research Question
@@ -159,7 +135,7 @@ streamlit run dashboard/app.py
 ## Key Findings
 
 ### HTC Indicator Prevalence
-Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Persuade and Hard to Contact are nearly equally prevalent, each present in roughly 3 in 4 households. Hard to Locate is the rarest, reflecting its narrow definition of address instability.
+Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard to Persuade and Hard to Contact are nearly equally prevalent, each present in roughly 3 in 4 households. Hard to Locate is the rarest.
 
 | HTC Framework Segment | Households Flagged | % of Total |
 |---|---|---|
@@ -169,7 +145,7 @@ Analysis of the 36,270 households in the MCHI 2023–2024 data shows that Hard t
 | Hard to Locate | 335 | 0.9% |
 
 ### Indicator Clustering
-A key focus of this analysis is understanding how HTC indicators **cluster** — whether the same households tend to show indicators from multiple HTC segments simultaneously. This matters because households flagged across multiple segments are associated with significantly more interviewer effort and lower completion rates.
+A key focus of this analysis is understanding how HTC indicators **cluster** — whether the same households tend to show indicators from multiple HTC segments simultaneously. This matters because households flagged across multiple segments are associated with significantly more interviewer contact attempts and lower completion rates.
 
 Among the 36,270 households:
 
@@ -181,7 +157,6 @@ Among the 36,270 households:
 | 3 segments | 1,135 | 3.1% |
 | 4 segments | 14 | 0.0% |
 
-**95.5% of households have at least one HTC indicator.** Nearly 3 in 5 show indicators from two or more segments simultaneously — meaning multi-segment households are the norm, not the exception.
 
 ### The Compounding Effect
 As the number of HTC segments flagged per household increases, interviewer effort rises and completion rates fall:
@@ -193,8 +168,6 @@ As the number of HTC segments flagged per household increases, interviewer effor
 | 2 | 21,558 | 17.1 | 35.0% |
 | 3 | 1,135 | 20.6 | 30.8% |
 | 4 | 14 | 23.0 | 21.4% |
-
-Each additional segment is associated with more contact attempts and lower completion. The steepest drop occurs from 0 to 1 segment, where completion falls from 70.2% to 44.1% — reflecting that even a single HTC indicator significantly affects interview outcomes.
 
 ### Most Common Co-occurring Segment Pairs
 
@@ -219,17 +192,9 @@ All MCHI indicators used in this analysis are logged by the interviewer during o
 **HTC segment flags are binary and do not capture intensity**
 Each household receives a 0 or 1 flag per HTC segment, indicating only whether any corresponding indicator appeared across all contact attempts. The flags do not capture how many times an indicator appeared, how strongly it was expressed, or how early in the contact process it occurred.
 
-**MCHI indicators are proxies for HTC segments, not direct measures**
-The Census HTC framework is a conceptual model. The MCHI dataset does not directly measure HTC segment membership — this analysis maps MCHI-derived indicators to the most appropriate HTC segment based on indicator definitions and manager guidance. The mapping reflects a methodological judgment and may be revised as definitions are refined.
-
 **No geographic identifiers**
 The processed dataset does not include geographic variables such as state, county, or census tract. Findings describe patterns across the full CE sample and cannot be mapped to specific locations or regions without additional data linkage.
 
-**Dataset covers CE Interview households only**
-This analysis is based solely on Consumer Expenditure Interview Survey households. Findings should not be generalized to the broader U.S. population or to other survey programs without additional validation.
-
-**Wave 5 is absent**
-The 2023–2024 MCHI file contains no Wave 5 records. The CE panel runs up to 5 waves, so this dataset does not capture the full panel lifecycle. Households that persist to Wave 5 may represent the most difficult-to-reach cases and their absence may affect estimates of contact effort and completion in later waves.
 
 ---
 
@@ -243,9 +208,6 @@ Outcome code 313 appears 38,362 times in the raw data across 3,063 households bu
 
 **Q1 2023 is disproportionately large**
 Quarter 20231 (Q1 2023) contains 11,302 households — approximately 3.5 times the size of every other quarter (~3,100 each). This appears to reflect the panel's enrollment baseline rather than a data error, but it means aggregate statistics are influenced by Q1 2023 households more heavily than any other period.
-
-**872 households show 0 days in field**
-These households have a final outcome recorded on the same day as first contact (DYSINFLD = 0). This may represent same-day refusals, immediate non-eligibility determinations, or a data recording artifact. These cases should be reviewed before using days-in-field as an analysis variable.
 
 **Extreme outliers in contact attempts**
 The maximum number of contact attempts for a single household is 108, against a mean of 14.4 and a median of 13. A small number of households account for a disproportionate share of total interviewer effort and may influence averages in segment-level comparisons.
