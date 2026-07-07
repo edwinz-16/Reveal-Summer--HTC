@@ -10,8 +10,8 @@ A dashboard to identify and describe communities with characteristics associated
 
 - **Hard to Interview** — situations where language or communication factors make it difficult to conduct the interview itself
 - **Hard to Locate** — situations where a household's physical location is difficult to confirm (address issues, household moved, unit uncertainty)
-- **Hard to Persuade** — situations where households express concerns about data privacy, government data collection, or survey participation
-- **Hard to Contact** — situations where the household's location is known but the interviewer was unable to reach or connect with anyone there (gated access, repeated no-contact visits, scheduling constraints)
+- **Hard to Persuade** — situations where contact with the household was established, but the respondent declined to participate — whether due to privacy concerns, government distrust, or stated reasons such as being too busy or scheduling constraints
+- **Hard to Contact** — situations where the household's location is known but the interviewer was unable to make any contact with anyone there (no one home, locked gate, no answer at door)
 
 **Important distinction:** These HTC framework segments are *conceptual categories* from the Census literature. The MCHI dataset does not measure them directly — instead, it contains interviewer-recorded indicators that *correspond to* certain segments of the HTC framework. This project maps those MCHI-derived indicators to the appropriate HTC framework segment. The indicators should not be treated as equivalent to the framework categories themselves.
 
