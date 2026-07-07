@@ -284,6 +284,7 @@ household["htc_hard_to_locate"] = (
 household["htc_hard_to_contact"] = (
     (household["NCTPER07"] > 0) |   # locked gate or buzzer-entry building
     (household["NCTPER01"] > 0) |   # no one home on personal visit
+    (household["NCTPER04"] > 0) |   # someone home but not answering door
     (household["NCTPER11"] > 0) |   # had to go through building management/doorman
     (household["NONINTR2"] > 0) |
     (household["RSPDNT02"] > 0) |
