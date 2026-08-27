@@ -139,6 +139,7 @@ FNLOTCME_LABELS = {
     "216": "No one home - unable to contact",
     "217": "Temporarily absent",
     "219": "Other non-interview",
+    "313": "Stop Work (Type A Noninterview)",
     "321": "Refused - hostile respondent",
     "322": "Refused - time related",
     "323": "Refused - language problem",
@@ -182,7 +183,6 @@ CNTCTYP_LABELS = {
     "4": "No contact attempted",
 }
 
-df["FNLOTCME_label"] = df["FNLOTCME"].map(FNLOTCME_LABELS).fillna("Other/Unknown")
 df["LANGLIST_label"] = df["LANGLIST"].map(LANGLIST_LABELS).fillna("None recorded")
 df["VISTWKDY_label"] = df["VISTWKDY"].map(VISTWKDY_LABELS).fillna("Unknown")
 df["CNTCTYP_label"] = df["CNTCTYP"].map(CNTCTYP_LABELS).fillna("Unknown")
@@ -219,7 +219,6 @@ agg_dict["INTERI"] = "max"  # highest wave reached
 
 # Final outcome: take the last non-empty value recorded
 agg_dict["FNLOTCME"] = "last"
-agg_dict["FNLOTCME_label"] = "last"
 
 # Language: take first non-null language recorded
 def first_language(s):
@@ -232,10 +231,18 @@ household = df.groupby("CUID").agg(
     qyear=("QYEAR", "first"),
     max_wave=("INTERI", "max"),
     final_outcome_code=("FNLOTCME", "last"),
-    final_outcome=("FNLOTCME_label", "last"),
     language=("LANGLIST_label", first_language),
     **{col: (col, "sum") for col in FLAG_COLS if col in df.columns},
 ).reset_index()
+
+# Derive the outcome label from the aggregated (household-level) code, not
+# from a pre-aggregated label column. Aggregating a pre-mapped label with
+# "last" is wrong here: pandas' "last" skips nulls per column independently,
+# so a household whose truly-last attempt has a blank FNLOTCME would pick
+# up that blank row's fillna'd "Other/Unknown" label while final_outcome_code
+# correctly reports the last real code from an earlier attempt — silently
+# mislabeling the outcome for any household with a blank trailing attempt.
+household["final_outcome"] = household["final_outcome_code"].map(FNLOTCME_LABELS).fillna("Other/Unknown")
 
 print(f"  Aggregated shape: {household.shape[0]:,} households x {household.shape[1]} columns")
 
@@ -252,14 +259,22 @@ print(f"  Aggregated shape: {household.shape[0]:,} households x {household.shape
 # Each flag is 1 if any MCHI indicator for that segment appeared
 # across any contact attempt for this household.
 
-# Hard to Interview — language barriers that prevent the interview itself
+# Hard to Interview — language or health barriers that prevent the interview
+# itself. NONINTR5 (health problem) added to match the Census Bureau's own
+# Hard to Interview definition, which includes health issues alongside
+# language barriers and technological barriers. No MCHI field captures
+# technological barriers at all (checked the full data dictionary for
+# technology/internet/device/literacy-related codes -- none exist), so that
+# third dimension remains entirely uncaptured; documented as a limitation
+# rather than approximated with an unrelated field.
 household["htc_hard_to_interview"] = (
     (household["NONINTR4"] > 0) |
     (household["LNGUAGE2"] > 0) |
     (household["LNGUAGE4"] > 0) |
     (household["LNGUAGE5"] > 0) |
     (household["language"] != "None recorded") |
-    (household["final_outcome_code"] == "323")
+    (household["final_outcome_code"] == "323") |
+    (household["NONINTR5"] > 0)
 ).astype(int)
 
 # Hard to Persuade — contact was made but respondent declined to participate

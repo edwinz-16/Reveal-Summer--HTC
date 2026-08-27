@@ -1,0 +1,117 @@
+/* style.css
+   Global overrides for the HTC dashboard. Dash auto-loads everything in
+   this assets/ folder.
+
+   Content area is light; only the top nav bar is dark chrome (see app.py).
+   Two jobs this file does that inline component styles can't:
+   1. Section 508 / WCAG 2.4.7 focus-visible indicators -- required for
+      keyboard-only navigation.
+   2. Nav-bar hover states and checked-chip styling, which need CSS
+      pseudo-classes (:hover, :has()) that Dash's `style` props can't express.
+*/
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: #f9f9f7;
+  margin: 0;
+}
+
+/* --- Focus-visible: required for keyboard-only navigation (WCAG 2.4.7) --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible,
+.dash-table-container *:focus-visible,
+.Select-control:focus-visible,
+.tab:focus-visible {
+  outline: 3px solid #1E87E0 !important;
+  outline-offset: 2px !important;
+}
+
+/* --- Nav bar: hover + active state on the flat nav items --- */
+.tab {
+  transition: background-color 0.12s ease;
+}
+.tab:hover {
+  background-color: #244ead !important;
+  cursor: pointer;
+}
+.tab--selected:hover {
+  background-color: #1942a0 !important;
+}
+
+/* --- Wave-filter chip checklist: checked state highlight --- */
+.chip-checklist label:has(input:checked) {
+  background-color: #1E87E0 !important;
+  color: #ffffff !important;
+  border-color: #1E87E0 !important;
+}
+.chip-checklist input[type="checkbox"] {
+  accent-color: #ffffff;
+}
+
+/* --- dcc.Dropdown focus ring (react-select doesn't expose :focus-visible
+       on its own, so match the same accent on the open/focused state) --- */
+.is-focused > .Select-control,
+.is-open > .Select-control {
+  border-color: #1E87E0 !important;
+  box-shadow: 0 0 0 1px #1E87E0 !important;
+}
+
+/* --- Glossary terms: definition on hover or keyboard focus. The `title`
+       attribute (set in app.py's gl() helper) is the accessible source of
+       truth for screen readers; this custom bubble is a visual layer on
+       top of it, shown via :hover and :focus-visible so keyboard users get
+       the same definition mouse users do, not just a native OS tooltip. --- */
+.glossary-term {
+  text-decoration: underline dotted;
+  text-decoration-color: #898781;
+  text-underline-offset: 2px;
+  cursor: help;
+  position: relative;
+}
+.glossary-term:hover::after,
+.glossary-term:focus-visible::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0B3390;
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+  width: max-content;
+  max-width: 260px;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+.glossary-term:focus-visible {
+  outline: 2px solid #1E87E0;
+  outline-offset: 2px;
+}
+
+/* --- Scrollbar (webkit) --- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f0efec;
+}
+::-webkit-scrollbar-thumb {
+  background: #c3c2b7;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1E87E0;
+}
